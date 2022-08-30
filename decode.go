@@ -36,7 +36,7 @@ func ReadInt64(buf *bufio.Reader) (int64, error) {
 	return int64(binary.LittleEndian.Uint64(b)), nil
 }
 
-func SkipZero(buf *bufio.Reader) error {
+func skipZero(buf *bufio.Reader) error {
 	b, err := buf.ReadByte()
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func ReadDocument(buf *bufio.Reader) (doc D, err error) {
 	if err != nil {
 		return doc, err
 	}
-	if err = SkipZero(buf); err != nil {
+	if err = skipZero(buf); err != nil {
 		return nil, err
 	}
 	buf = bufio.NewReader(bytes.NewReader(b))
@@ -175,7 +175,7 @@ func ReadString(buf *bufio.Reader) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if err = SkipZero(buf); err != nil {
+	if err = skipZero(buf); err != nil {
 		return "", err
 	}
 	return string(b), nil
